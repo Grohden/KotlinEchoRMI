@@ -1,7 +1,6 @@
 package client
 
 import echo.client.interfaces.IEcho
-import java.rmi.Naming
 import java.rmi.registry.LocateRegistry
 import java.rmi.registry.Registry
 
@@ -12,7 +11,10 @@ class Client {
         try {
             val registry = LocateRegistry.getRegistry(Registry.REGISTRY_PORT)
             val stub = registry.lookup("Echo") as IEcho
-            println(stub.output("Test"))
+            println(stub.echo("Test"))
+
+            stub.getHistory().forEach(::println)
+
         } catch (e: Exception) {
             System.err.println("Client exception: $e")
             e.printStackTrace()

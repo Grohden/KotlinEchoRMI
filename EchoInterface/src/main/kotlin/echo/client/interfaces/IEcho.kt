@@ -7,5 +7,8 @@ import java.rmi.RemoteException
 interface IEcho : Remote, Serializable {
 
     @Throws(RemoteException::class)
-    fun output(message: String): String
+    fun echo(message: String): String
+
+    @Throws(RemoteException::class)
+    fun getHistory(): List<String>
 }

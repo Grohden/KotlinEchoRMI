@@ -1,6 +1,7 @@
 package client
 
 import echo.client.interfaces.IEcho
+import echo.server.Log
 import java.rmi.registry.LocateRegistry
 import java.rmi.registry.Registry
 
@@ -15,9 +16,8 @@ class Client {
 
             stub.getHistory().forEach(::println)
 
-        } catch (e: Exception) {
-            System.err.println("Client exception: $e")
-            e.printStackTrace()
+        } catch (e: Throwable) {
+            Log.e { "Client exception: $e" }
         }
     }
 }

@@ -9,4 +9,11 @@ message to other instances of itself (TODO)
 
 ## How to run
 
-TODO
+First, run  `gradlew build`, this will create
+two files in the `app` folder that you can run with:
+
+* Server: `jar -jar app/EchoServer-1.0.jar`
+* Client: `jar -jar app/EchoClient-1.0.jar`
+
+(Remember to run the server first)
+

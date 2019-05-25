@@ -1,3 +1,4 @@
 rootProject.name = 'KotlinEchoRMI'
 include 'EchoInterface'
 include 'EchoServer'
+include 'EchoClient'

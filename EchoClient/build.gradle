@@ -4,6 +4,7 @@ plugins {
 
 group 'KotlinEchoRMI'
 version '1.0'
+defaultTasks 'run'
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -17,7 +18,7 @@ compileTestKotlin {
 }
 
 jar {
-    manifest { attributes 'Main-Class': 'echo.server.MainDeclarationsKt' }
+    manifest { attributes 'Main-Class': 'client.RemoteEchoClientKt' }
     from {
         configurations.compile.collect {
             it.isDirectory() ? it : zipTree(it)

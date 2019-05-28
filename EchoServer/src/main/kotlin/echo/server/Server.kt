@@ -12,6 +12,11 @@ import java.util.*
 object Server {
     private val usedPorts: MutableSet<Int> = mutableSetOf(Registry.REGISTRY_PORT)
     private var selfId = UUID.randomUUID()
+
+    // to try to avoid garbage collection here
+    private var stubbedMaster: IServerCommunicator? = null
+    private var stubbedClient: IEcho? = null
+
     var masterId: UUID? = null
     var echoList = mutableListOf<String>()
 
@@ -32,19 +37,20 @@ object Server {
         Log.d { "Trying to assume master place" }
 
         val server = ServerCommunicator(id = selfId)
-        val registry = LocateRegistry.createRegistry(server.port)
-        val serverStub = UnicastRemoteObject.exportObject(
+        val registry = LocateRegistry.createRegistry(Registry.REGISTRY_PORT)
+        stubbedMaster = UnicastRemoteObject.exportObject(
             server,
-            server.port
+            Registry.REGISTRY_PORT
         ) as IServerCommunicator
 
-        val clientStub = UnicastRemoteObject.exportObject(
+
+        stubbedClient = UnicastRemoteObject.exportObject(
             ClientCommunicator(),
             server.port
         ) as IEcho
 
-        registry.bind("Master", serverStub)
-        registry.rebind("Echo", clientStub)
+        registry.rebind("Master", stubbedMaster!!)
+        registry.rebind("Echo", stubbedClient!!)
 
         Log.d { "Assumed master control" }
         masterId = server.id
@@ -98,7 +104,7 @@ object Server {
     }
 
     fun startScanner() = Thread {
-        while (true) {
+        while (true) try {
             val masterServer = findMaster()
 
             if (masterServer != null) {
@@ -118,6 +124,8 @@ object Server {
             }
 
             Thread.sleep(200)
+        } catch (ignored: Throwable) {
+
         }
     }.start()
 }

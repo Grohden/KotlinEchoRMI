@@ -17,3 +17,7 @@ two files in the `app` folder that you can run with:
 
 (Remember to run the server first)
 
+Note: newest windows machines tends to "lock" the terminal, 
+so if you open multiple ones and the client hangs, try to focus
+on the master terminal and press any key to "unlock" it
+

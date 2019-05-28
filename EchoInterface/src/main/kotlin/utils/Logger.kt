@@ -10,7 +10,7 @@ enum class Level {
 typealias Make = (provider: () -> String) -> Unit
 
 object Log {
-    var level = Level.INFO
+    var level = Level.ALL
 
     private fun make(minLevel: Level): Make = { provider ->
         if (level >= minLevel) {

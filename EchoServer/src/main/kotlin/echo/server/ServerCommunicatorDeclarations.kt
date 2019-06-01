@@ -22,13 +22,8 @@ interface IServerCommunicator : Remote, Serializable {
     val echoList: List<String>
 
     @Throws(RemoteException::class)
-    fun register(): Int
-
-    @Throws(RemoteException::class)
     fun recordEcho(echo: String)
-
 }
-
 
 class ServerCommunicator(
     override val id: UUID,
@@ -37,8 +32,6 @@ class ServerCommunicator(
 ) : IServerCommunicator {
     override val echoList: List<String>
         get() = Server.echoList
-
-    override fun register(): Int = Server.registerSlave()
 
     override fun recordEcho(echo: String) = Server.recordEcho(echo)
 }

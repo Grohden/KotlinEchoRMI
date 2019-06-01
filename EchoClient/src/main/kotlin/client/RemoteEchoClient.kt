@@ -12,8 +12,9 @@ class Client {
 
     private fun findEcho(i: Int = 0): IEcho? {
         return try {
-            val registry = LocateRegistry.getRegistry(Registry.REGISTRY_PORT)
-            registry.lookup("Echo") as IEcho
+            LocateRegistry
+                .getRegistry(Registry.REGISTRY_PORT)
+                .lookup("Echo") as IEcho
         } catch (nb: NotBoundException) {
             if (i < 3) {
                 findEcho(i + 1)
